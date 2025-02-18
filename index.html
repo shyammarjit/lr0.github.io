@@ -165,14 +165,14 @@
                   <img src="static/images/acc_drop.png" width="100%" style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 8px; margin-top: auto;" />
               </div>
               <p class="carousel-caption" style="width: 82%; margin-left: auto; margin-right: auto; text-align: center;">
-                  ▷ Top-1 zero-shot classification accuracy (y-axis) vs resolution (x-axis): Backbones for foundation models are merged as shade, with average performance across backbones in the dark.
+                <strong> Fall of Top-1 zero-shot classification accuracy (y-axis) with resolution (x-axis):</strong>  Backbones for foundation models are merged as shade, with average performance across backbones in the dark.
               </p>
               
               <div class="item"> <!-- Your image here -->
                   <img src="static/images/low_res.png" width="100%" style="display: block; margin-left: auto; margin-right: auto; margin-bottom: 8px; margin-top: 25px" />
               </div>
               <p class="carousel-caption" style="width: 90%; margin-left: auto; margin-right: auto; text-align: center;">
-                  ▷ Zero-Shot misclassifications: EVA-CLIP correct classification at 224×224 (<span style="color: rgb(4, 173, 101);">green</span>) & misclassification at lower resolution (<span style="color: rgb(254,1, 2);">red</span>). However, ImageNet labels-based mispredictions are semantically reasonable (humans), 
+                <strong> Zero-Shot Semantically correct misclassifications:</strong> EVA-CLIP correct classification at 224×224 (<span style="color: rgb(4, 173, 101);">green</span>) & misclassification at lower resolution (<span style="color: rgb(254,1, 2);">red</span>). However, ImageNet labels-based mispredictions are semantically reasonable (humans), 
                   <span style="display: block; text-align: center;">
                       indicating viability of pre-trained weights at low resolution.
                   </span>
@@ -250,37 +250,37 @@
           <h2 class="title is-3">🚀 Weighted Aggregated Robustness</h2>
           <div class="content has-text-justified">
             <p>
-              <b><i>Problem A) Misleading high robustness:</i> </b>
+              <b><i>Problem A) Misleading high robustness:</i> </b> : If the model performs poorly on a challenging dataset
+              i.e. performance close to random predictions, then downsampling will likely maintain this random
+              prediction with minimal drop in accuracy, giving abnormally high robustness score.
             </p>
 
             <p>
-              <b><i>▷ Solution: Improved Relative Robustness</i> </b>
+              <b><i>▷ Solution: Improved Relative Robustness:</i> </b>   We
+              propose zeroing out robustness near random predictions. 
+              <div style="display: flex; justify-content: center; align-items: center; gap: 100px;">
+                <img src="static/images/improved robustness.jpeg" width="50%" height="50%">
+                <img src="static/images/new_alpha_page-0001.jpg" width="30%" height="30%">
+              </div>
+
             </p>
 
             <p>
-              <b><i>Problem B) SAR overlooks datasets:</i> </b>
+              <b><i>Problem B) SAR overlooks datasets:</i> </b> When comparing models, their robustness scores are averaged across datasets (giving each dataset a score of 1, SAR). Ideally, the model rankings, after averaging, should stay consistent with
+              individual dataset rankings. Model rankings on datasets like ImageNet overshadows the ranking of datasets like
+              ImageNet-A and EuroSAT, which behave differently. This makes the final comparison exclude such datasests, as if these datasets aren’t present (<span style="color: rgb(254,1, 2);">left, below</span>). 
             </p>
 
             <p>
-              <b><i>▷ Solution: Weighted Aggregated Robustness</i> </b>
+              <b><i>▷ Solution: Weighted Aggregated Robustness</i> </b>: We propose adjusting the dataset weights so that the model rankings after aggregation
+              reflect each dataset fairly. Weights are optimized such that the correlation (Spearman) between the model rankings after the weighted average and individual dataset rankings are maxi-
+              mized. (<span style="color: rgb(4, 173, 101);">right, below</span>)
             </p>
-
-          <!-- <div class="container">
-              <img src="static/images/Slide7.jpeg" alt="GIF 1" class="img1">
-              <img src="static/images/Slide8.jpeg" alt="GIF 2" class="img2">
-          </div> -->
 
           <div class="columns is-centered">
             <div class="column">
               <div class="content">
                 <!-- <h2 class="title is-3">LR Tokens</h2> -->
-                <p>
-                  ▷ We propose adjusting the dataset weights so that the model rankings after aggregation
-                  reflect each dataset fairly. Weights are optimized such that the correlation (Spearman)
-                  between the model rankings after the weighted average and individual dataset rankings are maxi-
-                  mized.
-                </p>
-                
                 <img src="static/images/Slide7.jpeg" width="100%" height="100%">
               </div>
             </div>
@@ -288,13 +288,6 @@
             <div class="column">
               <div class="content">
                 <!-- <h2 class="title is-3">LR Tokens</h2> -->
-                <p>
-                  ▷ We propose adjusting the dataset weights so that the model rankings after aggregation
-                  reflect each dataset fairly. Weights are optimized such that the correlation (Spearman)
-                  between the model rankings after the weighted average and individual dataset rankings are maxi-
-                  mized.
-                </p>
-                
                 <img src="static/images/Slide8.jpeg" width="100%" height="100%">
               </div>
             </div>
@@ -306,14 +299,17 @@
 
 <!-- LR Tokens and LR-TK0 -->
 <hr class="divider" />
-<section class="section">
+<section class="section hero">
   <div class="container is-max-desktop">
+    <div class="section-title has-text-centered is-centered"></div>
+    <h2 class="title is-3">👻 Proposed Technique</h2>
+    <div class="content has-text-justified">
 
     <div class="columns is-centered">
       <!-- LR tokens. -->
       <div class="column">
         <div class="content">
-          <h2 class="title is-3">LR Tokens</h2>
+          <h3 class="title is-3">LR Tokens</h3>
           <p>
             ▷ LR tokens are added to the frozen spatial patches (white) after patch generation, before each frozen transformer block, and class token as a final feature.
           </p>
@@ -332,7 +328,7 @@
 
       <!-- LR-TK0. -->
       <div class="column">
-        <h2 class="title is-3">LR-TK0</h2>
+        <h3 class="title is-3">LR-TK0</h3>
         <div class="columns is-centered">
           <div class="column content">
             <p>
@@ -357,7 +353,7 @@
 <section class="section hero">
   <div class="container is-max-desktop">
       <div class="section-title has-text-centered is-centered">
-          <h2 class="title is-3">🚀 Zero-Shot High Resolution Dataset Synthesis</h2>
+          <h2 class="title is-3">🤖 Zero-Shot High Resolution Dataset Synthesis</h2>
           <div class="content has-text-justified">
             <p>
               We use the diffusion model PIXART-&alpha; to generate synthetic HR images, via
@@ -372,7 +368,7 @@
                   <img src="static/images/gen_images.png" width="110%" height="110%">
                 </div>
                 <p class="carousel-caption" style="width: 90%; margin-left: auto; margin-right: auto; text-align: center;">
-                  ▷ Multiple images per caption generated via different seeds.
+                  <strong>Samples generated using the captions randomly sampled from Conceptual Captions.</strong>
                 </p>
                 
               </div>
@@ -385,7 +381,7 @@
                 </div>
                 
                 <p class="carousel-caption" style="width: 90%; margin-left: auto; margin-right: auto; text-align: center;">
-                  ▷ Samples generated using the captions randomly sampled from Conceptual Captions.
+                  <strong>Multiple images per caption generated via different seeds.</strong>
                 </p>
               </div>
             </div>
@@ -403,13 +399,10 @@
       <div class="section-title has-text-centered is-centered">
           <h2 class="title is-3">Experimental Results</h2>
           <div class="content has-text-justified">
-            <p>
-              Experimental Results
-            </p>
-
             <div class="content">
               <p class="carousel-caption" style="width: 90%; margin-left: auto; margin-right: auto; text-align: center; margin-bottom: -5px">
-                <strong>▷ <b>LR-TK0 improvement on Foundation models:</b> Meta-B/16</strong>: MetaCLIP-ViT-B/16 (2.5B), <strong>OC-B/16</strong>: OpenCLIP-ViT-B/16. Higher number &prop; better performance.
+                <strong>▷ <b>LR-TK0 improvement on Foundation models:</b> EVA-B/16</strong> is EVA
+                  <strong>Meta-B/16</strong>: MetaCLIP-ViT-B/16 (2.5B), <strong>OC-B/16</strong>: OpenCLIP-ViT-B/16. Higher number &prop; better performance.
               </p>
 
               <iframe src="table.html" width="100%" height="300px" style="border:none;"></iframe>
@@ -419,12 +412,12 @@
             <div class="content">
               <img src="static/images/proposed_base.png" width="100%" height="100%" style="margin-top: -40px;">
               <p class="carousel-caption" style="width: 90%; margin-left: auto; margin-right: auto; text-align: center; margin-bottom: 35px;">
-                ▷ Baseline vs LR-TK0: Top-1 accuracy for EVA-CLIP-B/16 on 16×16. 
+                Baseline vs LR-TK0: Top-1 accuracy for EVA-CLIP-B/16 on 16×16. 
                 <!-- <b><i>Right:</i></b> LR-TK0 improves all EVA backbones: L@336 is L/14 with 336×336 input. -->
               </p>
             </div>
 
-            <div style="display: flex; justify-content: center; align-items: center; gap: 30px;">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 200px;">
               <img src="static/images/imgs_captions_SAR.png" width="30%" height="30%">
               <img src="static/images/eva_backbones.png" width="30%" height="30%">
             </div>
@@ -444,12 +437,16 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{pathak2025lr0,
-  author    = {Pathak, Priyank and Marjit, Shyam and Vyas, Shruti and Rawat, Yogesh S},
-  title     = {LR0.FM: Low-Resolution Zero-shot Classification Benchmark For Foundation Models},
-  journal   = {International Conference on Learning Representations},
-  year      = {2025},
-}</code></pre>
+    <pre><code>
+      @inproceedings{
+        pathak2025lrfm,
+        title={{LR}0.{FM}: {LOW}-{RESOLUTION} {ZERO}-{SHOT} {CLASSIFICATION} {BENCHMARK} {FOR} {FOUNDATION} {MODELS}},
+        author={Priyank Pathak and Shyam Marjit and Shruti Vyas and Yogesh S Rawat},
+        booktitle={The Thirteenth International Conference on Learning Representations},
+        year={2025},
+        url={https://openreview.net/forum?id=AsFxRSLtqR}
+        }
+    </code></pre>
   </div>
 </section>
 
